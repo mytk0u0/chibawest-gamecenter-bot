@@ -1,7 +1,7 @@
 import asyncio
 import discord
 from google.cloud import secretmanager
-from . import minecraft
+from . import minecraft, valheim
 import logging
 import os
 
@@ -78,12 +78,12 @@ class ChibawestGamecenterBot(discord.Client):
         # valheim commands
         if message.content == "!hey valheim":
             await message.channel.send("valheimを始めます")
-            await minecraft.start_server()
+            await valheim.start_server()
         if message.content == "!bye valheim":
             await message.channel.send("valheimを終わります")
-            await minecraft.stop_server()
+            await valheim.stop_server()
         if message.content == "!how valheim":
-            ip = await minecraft.get_server_ip()
+            ip = await valheim.get_server_ip()
             await message.channel.send(f"{ip}:2456でサーバーに接続してください。「chibawest」で入れます")
 
 
