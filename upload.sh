@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 docker login
 docker build -t mytk0u0/chibawest-gamecenter-bot .
