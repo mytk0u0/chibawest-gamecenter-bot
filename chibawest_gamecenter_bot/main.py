@@ -39,35 +39,52 @@ class ChibawestGamecenterBot(discord.Client):
     async def on_message(self, message):
         if message.author.bot:
             return
-        if message.content == "!cmd":
+        if message.content == "!commands":
             await message.channel.send(
                 "\n".join(
                     [
-                        "!cmd ... botが利用可能なコマンドを表示する",
+                        "!commands ... botが利用可能なコマンドを表示する",
                         "!repos ... アプリケーションのGitHubリポジトリを表示する",
-                        "!mc_start ... マイクラサーバーを起動する",
-                        "!mc_stop ... マイクラサーバーを停止する",
-                        "!mc_get ... マイクラサーバーの状態を取得する",
-                        "!mc_ip ... マイクラサーバーのIPアドレスを取得する",
+                        "!status ... マイクラサーバーを起動する",
+                        "!hey xxx ... xxxサーバーを起動",
+                        "!bye xxx ... xxxサーバーを停止",
+                        "!how xxx ... xxxサーバーへのログイン方法を表示",
                     ]
                 )
             )
         if message.content == "!repos":
             await message.channel.send(
-                "https://github.com/mytk0u0/chibawest-gamecenter-apps"
+                "https://github.com/mytk0u0/chibawest-gamecenter-bot"
             )
-        if message.content == "!mc_start":
-            await message.channel.send("マイクラサーバーを起動します。")
-            await minecraft.start_server()
-        if message.content == "!mc_stop":
-            await message.channel.send("マイクラサーバーを停止します。")
-            await minecraft.stop_server()
-        if message.content == "!mc_get":
+
+        if message.content == "!status":
             status = await minecraft.get_server_status()
-            await message.channel.send(f"マイクラサーバーの状態: {status}")
-        if message.content == "!mc_ip":
+            await message.channel.send(f"minecraft server status: {status}")
+
+            status = await minecraft.get_server_status()
+            await message.channel.send(f"valheim server status: {status}")
+
+        # minecraft commands
+        if message.content == "!hey minecraft":
+            await message.channel.send("minecraftを始めます")
+            await minecraft.start_server()
+        if message.content == "!bye minecraft":
+            await message.channel.send("minecraftを終わります")
+            await minecraft.stop_server()
+        if message.content == "!how minecraft":
             ip = await minecraft.get_server_ip()
-            await message.channel.send(f"アドレス: {ip}\nポート: 19132")
+            await message.channel.send(f"アドレス{ip}にポート19132で接続してください。")
+
+        # valheim commands
+        if message.content == "!hey valheim":
+            await message.channel.send("valheimを始めます")
+            await minecraft.start_server()
+        if message.content == "!bye valheim":
+            await message.channel.send("valheimを終わります")
+            await minecraft.stop_server()
+        if message.content == "!how valheim":
+            ip = await minecraft.get_server_ip()
+            await message.channel.send(f"{ip}:2456でサーバーに接続してください。「chibawest」で入れます")
 
 
 def run():
